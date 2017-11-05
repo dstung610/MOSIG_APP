@@ -226,15 +226,11 @@ By travesing the cache diagonal, we can find the solution with the max value.
 \begin{algorithmic}
 \caption{}
 \Procedure{$travesing\_cache\_diagonal$}{}
-\State $x = 0$	
-\State $y = N$	
-\State $max = cache[x][y]$
-\For{\texttt{i = 0; i < N; i++}}
-	\If{$max.score \leq cache[x][y],score$}
-		\State $max = cache[x][y]$	
+\State $max = cache[0][N]$
+\For{\texttt{i = 1; i < N; i++}}
+	\If{$max.score \leq cache[i][N-i].score$}
+		\State $max = cache[i][N-i]$	
 	\EndIf
-	\State $x = x + 1$
-	\State $y = y - 1$	
 \EndFor
 
 \Return $max$
@@ -253,16 +249,17 @@ Our space complexity is O($N^{2 }$)
 
 \subsection{Time Complexity}
 
-We need compute the cache which cost $N^{2}/2$
+We need to compute the upper triangular of cache which is made with $N^{2}/2$ computations.
 \\[0.3cm]
-We have to travesing the cache which cost N times.
+We have to traverse the diagonal of the cache which costs O($N$)..
 \\[0.3cm]
-So that computation has the complexity of O($N^{2}/2$).
+So overall the computation has a complexity of O($N^{2}$).
 
 
 \section{Conclusion}
 In this APP, we studied the dynamic approach for a card play problem.
 \\[0.5cm]
 By using the cache concept. We stored the same problem computation in a 2 dimensions array. so we reduced the amount of computation for the same problem.
+
 
 \end{document}
