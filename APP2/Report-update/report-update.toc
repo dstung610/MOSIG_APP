@@ -1,0 +1,7 @@
+\contentsline {section}{\numberline {1}Greedy approach}{1}
+\contentsline {section}{\numberline {2}Optimal solution by exhaustion}{2}
+\contentsline {section}{\numberline {3}Dynamic approach}{4}
+\contentsline {section}{\numberline {4}Space and Time Complexity of Dynamic Approach}{6}
+\contentsline {subsection}{\numberline {4.1}Space complexity}{6}
+\contentsline {subsection}{\numberline {4.2}Time Complexity}{6}
+\contentsline {section}{\numberline {5}Conclusion}{6}
