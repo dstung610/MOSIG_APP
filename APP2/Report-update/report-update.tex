@@ -263,9 +263,15 @@ So overall the computation has a complexity of O($N^{2}$).
 
 
 \section{Conclusion}
-In this APP, we studied the dynamic approach for a card play problem.
+In this APP, we faced a problem of card playing game which take turn withdraw a card (only left most or right most) in the squence of card face up on the table and winner is the one who has the highest sum of all the card they withdraw till no more card is available.
+
+We played the game by using Greedy Algorithm and Dynamic Programming.
 \\[0.5cm]
-By using the cache concept. We stored the same problem computation in a 2 dimensions array. so we reduced the amount of computation for the same problem.
+With Greedy Algorithm, we keep taking the card with the highest value possible. By exploring the whole solution space, we may encounter several same computation and duplicate the calculation.
+
+With Dynamic Programming, by using the cache concept. We stored the same problem computation in a 2 dimensions array. so we reduced the amount of computation for the same problem.
+
+With this dynamic approach, we have the complexity in time is O($N^{2}$) and in space is O($N^{2}$)
 
 
 \end{document}
