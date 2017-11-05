@@ -188,7 +188,11 @@ The data structure for an element in cache[i][j]
 \caption{}
 \Procedure{$cache\_compute$}{$l,r$}
 \For{\texttt{k from 0 to N}} \Comment Diagonal has N elements
-	\State $dog\_take\_card(l,r)$ \Comment Choose the higher card between C[l] and C[r]
+%	\State $dog\_take\_card(l,r)$ 
+	\If{$C[l] \leq C[r]$} \Comment Illustrate Dog move
+	\State $r = r - 1$
+	\Else \State $l = l + 1$ 
+	\EndIf
 	\State $j = 0$
 	\For{\texttt{i from 0 to k}}
 		\If{$k-i == 0$}
@@ -253,7 +257,7 @@ Our space complexity is O($N^{2 }$)
 
 We need to compute the upper triangular of cache which is made with $N^{2}/2$ computations.
 \\[0.3cm]
-We have to traverse the diagonal of the cache which costs O($N$)..
+We have to traverse the diagonal of the cache which costs O($N$)
 \\[0.3cm]
 So overall the computation has a complexity of O($N^{2}$).
 
