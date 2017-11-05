@@ -173,7 +173,7 @@ Where the space complexity is linear: $S(N) = O(N)$ The amount of information st
 
 \section{Dynamic approach}
 
-We use the cache 2 dimensions array of size n by n where n is the total number of cards that we played. We have $C[n]$ is array store the card in order and $cache[n][n]$ is the array of cache.
+We use the cache 2 dimensions array of size n by n where n is the total number of cards that we played. We have $cache[n][n]$ is the array of cache. If we move by row ($i++$), this means that we choose the leftmost card, and if we move by column ($j++$), this means that we choose the rightmost card.
 
 The data structure for an element in cache[i][j]
 \begin{algorithm}[H]
@@ -192,22 +192,24 @@ The data structure for an element in cache[i][j]
 	\State $j = 0$
 	\For{\texttt{i from 0 to k}}
 		\If{$k-i == 0$}
-			\State $cache[0][j].score = C[r++]$
+			\State $cache[0][j].score = C[r--]$
 			\State $cache[0][j].path = `R`$
-			\State r = r -1
 		\ElsIf{$j == 0$}
 			\State $cache[k-i][0].score = C[l++]$ 
 			\State $cache[k-i][0].path = `L`$
-			\State l = l + 1
 		\Else 
-			\If{$cache[k-i-1][j].score \leq  cache[k-i][j-1].score$} 
-				\State $cache[k-i][j].score = cache[k-i][j-1].score + C[r++]$
+	    	\If{$cache[k-i-1][j] = NULL$} 
+			   	\State $cache[k-i][j].score = cache[k-i][j-1].score + C[r--]$
+				\State $cache[k-i][j].path = append(cache[k-i][j].path,`R`)$
+			\ElsIf{$cache[k-i][j-1] = NULL$} 
+			    \State $cache[k-i][j].score = cache[k-i-1][j].score + C[l++]$
+				\State $cache[k-i][j].path = append(cache[k-i-1][j].path,`L`)$
+			\ElsIf{$cache[k-i-1][j].score \leq  cache[k-i][j-1].score$} 
+				\State $cache[k-i][j].score = cache[k-i][j-1].score + C[r--]$
 				\State $cache[k-i][j].path = append(cache[k-i][j-1].path,`R`)$
-				\State r = r -1		
 			\Else 
 				\State $cache[k-i][j].score = cache[k-i-1][j].score + C[l++]$
 				\State $cache[k-i][j].path = append(cache[k-i-1][j].path,`L`)$	
-				\State l = l + 1
 			\EndIf 
 		\EndIf
 		\State j = j + 1
@@ -264,3 +266,18 @@ In this APP, we studied the dynamic approach for a card play problem.
 By using the cache concept. We stored the same problem computation in a 2 dimensions array. so we reduced the amount of computation for the same problem.
 
 \end{document}
+
+    © 2017 GitHub, Inc.
+    Terms
+    Privacy
+    Security
+    Status
+    Help
+
+    Contact GitHub
+    API
+    Training
+    Shop
+    Blog
+    About
+
