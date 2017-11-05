@@ -1,0 +1,415 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{natbib}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{algorithm}
+%\usepackage{algorithmic}
+\usepackage{algpseudocode}
+
+\usepackage{amsmath}%
+\usepackage{MnSymbol}%
+\usepackage{wasysym}%
+\usepackage{graphicx}
+
+\newcommand{\argmax}{\arg\!\max}
+\newcommand*{\QEDA}{\hfill\ensuremath{\blacksquare}}%
+
+\begin{document}
+\begin{titlepage}
+\begin{center}
+
+\vspace*{5cm}
+{\large Master 1 MoSIG}\\[0.5cm]
+
+{\Huge \textbf{Algorithmic Problem Solving} }\\[0.5cm]
+{\large APP2 Report} \\
+Hold'em for n00bs\\ 
+Team:\\Procedural Uniform Translation Across International Negotiations
+
+\vfill
+
+% Author and supervisor
+\noindent
+\begin{minipage}{0.4\textwidth}
+
+   \centering Members:\\Andrey \textbf{SOSNIN}\\Majdeddine \textbf{ALHAFEZ}\\Antoine \textbf{Colombier}\\Eman \textbf{AL-SHAOUR}\\Son Tung \textbf{DO}\\
+
+\end{minipage}%
+
+\vfill
+% Bottom of the page
+{Grenoble, 16 October, 2017}
+\clearpage
+
+\tableofcontents
+
+\end{center}
+\end{titlepage}
+\section{Greedy approach}
+We model the set of cards as an array of integers of size $N$. We do not consider a more realistic model ($N$ even, at most 52 cards, values between 2 and 14, at most 4 cards of each value) because we focus (except for this section) on exact algorithms which ignore these details.\\
+An implementation of the simulation of a game, where both players employ the same greedy strategy is the following:
+
+\begin{algorithm}[H]
+\caption{Simulate greedy}
+\begin{algorithmic} 
+\State $S \leftarrow create\_random\_array(N);$
+\State $first \leftarrow 0;$
+\State $last \leftarrow N - 1;$
+\State $wait\_for\_the\_opponent();$
+\State $N \leftarrow length(S) - 1;$
+\While{$N>0$}
+    \If{$S[first] > S[last]$}
+        \State $first \leftarrow first + 1;$
+    \Else
+        \State $last \leftarrow last - 1;$
+    \EndIf
+    \State $N \leftarrow N - 1;$
+    \If{$N>0$}
+        \State $wait\_for\_the\_opponent();$
+        \State $N \leftarrow N - 1;$
+    \EndIf
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+In the code above, $wait\_for\_the\_opponent()$ lets the opponent make their move (if it's the first one, the opponent has an option not to do it). This procedure also updates $fisrt$ or $last$. \textbf{This procedure is assumed to be deterministic}: for example, if the first and the last card have the same value, the opponent always chooses the left one.
+
+Using greedy strategy against an opponent playing a greedy strategy is \textbf{not optimal}: in the following game the opponent can be defeated, but not with the greedy strategy (whoever is taking the first card):\\
+\\
+\centerline{$\{3\ 10\ 3\ 9\ 5\ 2\}$}\\
+\\
+If the player takes the first card he can go: $right-right-left$ (or $2-9-10$). Otherwise, if the opponent takes $3$, he can go $left-left-left$ (or $10-9-2$). In both cases this wins the game, while applying greedy strategy doesn't.\\
+\\
+Using a greedy algorithm with another metric was taken into consideration. The suggested metric was maximizing the immediate score resulting by making a choice: $max(value(plyer's\ choice) - value(opponent's\ choice\ given\ player's\ choice))$. Howerver, the simulations showed that it resulted in a lower win ratio: about $0.15$ versus $0.45$ using standard greedy strategy.
+
+\section{Optimal solution by exhaustion}
+We assume that after a dog’s choice we have two possible solutions for the player’s choice. 
+\begin{itemize}
+\item In case the dog goes first, we have:\\
+optimal\_solution opt = Dogs\_turn(0, N-1)
+\item In case the dog chooses to go second, we have:\\
+optimal\_solution opt = best\_score(explore\_solution(0, N-1, left),\\ explore\_solution(0, N-1, right))
+\end{itemize}
+Time complexity is exponential: $T(N) = 2^{(N/2)}$\\
+Where the space complexity is linear: $S(N) = O(N)$ The amount of information store is at most K where K is the height of the recursive call function.
+
+
+\begin{algorithm}[H]
+\begin{algorithmic} 
+    \State optimal\_solution : $\{$
+    \State \quad string $path;$ \Comment stores the indexes of the cards
+    \State \quad int $score;$ \Comment best total score that we can have reaching this sub-problem from the root
+\State $\}$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\begin{algorithmic} 
+\caption{Complete space exploration}
+\Procedure{Dogs\_turn}{$i,j$} \Comment i, j : the indexes of the rightmost and leftmost cards
+ \If{$i\leq j$}
+  \State $optimal\_solution\ opt;$
+  \If{$S[i]\geq S[j]$}
+    \State $value \leftarrow S[j];$
+    \State $j--;$
+    \State $index \leftarrow j;$
+   \Else
+    \State $value \leftarrow S[i];$
+    \State $i++;$
+    \State $index \leftarrow i;$
+  \EndIf
+  
+   \State $right\_opt \leftarrow explore\_solution(i, j, right);$
+    \State $left\_opt \leftarrow explore\_solution(i, j, left);$
+  
+  \If{$left\_opt.score \geq right\_opt.score $}
+    \State $opt.path \leftarrow append(left\_opt.path, index);$
+    \State $opt.score  \leftarrow left\_opt.score + value;$
+   \Else
+    \State $opt.path \leftarrow append(right\_opt.path, index);$
+    \State $opt.score \leftarrow right\_opt.score + value;$
+  \EndIf
+  \State \Return $opt ;$
+  
+ \Else
+ \State \Return $NULL;$
+ \EndIf
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}
+\begin{algorithmic} 
+\caption{}
+\Procedure{$explore\_solution$}{$i,j, choice$} \Comment i, j : indexes of the rightmost and leftmost cards, choice: which card to choose
+ \If{$i\leq j$}
+  \State $optimal\_solution\ opt;$
+  \If{$choice = right$}
+    \State $value \leftarrow S[j];$
+    \State $j--;$
+    \State $index \leftarrow j;$
+   \Else
+    \State $value \leftarrow S[i];$
+    \State $i++;$
+    \State $index \leftarrow i;$
+  \EndIf
+  
+  $current\_opt \leftarrow Dogs\_turn(i,j);$
+  
+  \State $opt.path \leftarrow append(current\_opt.path, index);$
+  \State $opt.score  \leftarrow value + current\_opt.score $
+  \State \Return $opt;$
+ \Else
+ \State \Return $NULL;$
+ \EndIf
+ 
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\section{Dynamic approach}
+
+We use an array of arrays of increasing sizes $cache[][]$. The big array corresponds to the “levels” of the problem: each level is an array corresponding to all sub-problems of the same size. Little arrays contain elements of type Subproblem:
+
+\begin{algorithm}[H]
+\begin{algorithmic} 
+    \State Subproblem : $\{$
+    \State \quad int $index;$ \Comment first index of the subproblem in the initial problem
+    \State \quad int $best\_score;$ \Comment best total score that we can have reaching this subproblem from the root
+    \State \quad int $best\_parent;$ \Comment parent which maximizes the score
+    \State \quad bool $card;$ \Comment last card taken: 0 - left,  1 - right
+\State $\}$
+\end{algorithmic}
+\end{algorithm}
+This is defined more in-detail in the section 4.1.\\
+
+The entry $P$ of the following procedure is the initial problem $after$ the opponent has made their move, if any. $N$ is the number of cards.
+\begin{algorithm}[H]
+\caption{Generate good solutions}
+\begin{algorithmic} 
+\Procedure{Compute\_cache}{subproblem $P$, int $N$}
+    \State $height \leftarrow (N + 1)/2 + 1;$
+    \State $cache \leftarrow create\_array(height, []);$
+    \State $cache[level] \leftarrow create\_array(1, P);$
+    \For{$level=1\dots height$}
+        \State $cache[level] \leftarrow create\_array(2\times level + 1, None);$
+        %\STATE $cache[level][0] \leftarrow generate_left_son(cache[level - 1][0])$
+        \State $last \leftarrow add\_sons(cache[level - 1][0],\ cache,\ level,\ -1);$
+        \State $j \leftarrow 1;$
+        \While{$(j < 2\times level - 1) \wedge (cache[level - 1][j] \neq None)$}
+            \State $last\leftarrow add\_sons(cache[level - 1][j],\ cache,\ level,\ last);$
+            \State $incr j;$
+        \EndWhile
+    \EndFor
+    \State \Return cache
+\EndProcedure
+
+\end{algorithmic}
+\end{algorithm}
+
+(In the pseudocode "/" denotes integer division).
+
+
+\begin{algorithm}[H]
+\begin{algorithmic} 
+ \Procedure{Add\_sons}{subproblem $P$, array $cache$, int $level$, int $last$}
+   \State $S\leftarrow generate\_left\_son(P,\ level - 1);$
+   \If{$last = -1$} \Comment Is it the first one on this level?
+        \State $cache[level][last] \leftarrow S;$
+        \State $last \leftarrow last + 1;$
+        %\State $S' \leftarrow S$
+    \Else
+        \State $S' \leftarrow cache[level][last];$
+        \If{$S'.index = S.index$}   \Comment Was the problem already calculated?
+            \If{$S'.score < S.score$}
+                \State $cache[level][last] \leftarrow S;$   \Comment We found a better solution
+            \EndIf
+            \Else
+                \State $cache[level][last + 1] \leftarrow S;$
+                \State $last \leftarrow last + 1;$
+            %\State $Merge(S, S');$
+        \EndIf
+    \EndIf
+    \State $S\leftarrow generate\_right\_son(P, level - 1);$
+    \State $S' \leftarrow cache[level][last];$
+    \If{$S'.index = S.index$}
+        \If{$S'.score < S.score$}
+            \State $cache[level][last] = S;$
+        \Else
+            \State $cache[level][last + 1] = S;$
+            \State $last \leftarrow last + 1;$
+        \EndIf
+    \EndIf
+    \State \Return $last;$
+ \EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+Procedures $generate\_left\_son$ and $generate\_rigth\_son$ work the same way, as in the 2nd section: they each generate a problem obtained by player choosing one of the two cards, then letting the opponent take its move. The $best\_score$ fields are obtained by taking the $best\_score$ problem and adding new cards. The $card$ field is set to 0 for $generate\_left\_son$ and to 1 for $generate\_right\_son$.
+
+After generating the whole structure, we go through the last level of $cash[][]$ looking for the element with the highest score (linear complexity): when it is found we access its best parent, then its best parent and so on, until reaching the root. During this procedure we generate a sequence of 0s and 1s corresponding to the moves we take.
+
+
+\begin{algorithm}[H]
+\begin{algorithmic}
+    \Procedure{Play\_the\_damn\_game}{subproblem $P$, array $cache$, int $N$}
+    \State $height \leftarrow (N + 1)/2 + 1;$
+    \State $moves \leftarrow create\_array(height, 0);$
+    %\State $best = \argmax_{x.best\_score}()$
+    \State $best = \argmax_{x.best\_score}(cache[height - 1]);$
+    \For{$level=height\dots 1$}
+        \State $moves[level - 1] \leftarrow best.card$
+        \State $best \leftarrow cache[level - 1][best.best\_parent];$ 
+    \EndFor
+    \State $wait\_for\_the\_opponent();$
+    \For{$i=1\dots height$}
+        \State $play(moves[i])$
+        \State $wait\_for\_the\_opponent();$
+    \EndFor
+ \EndProcedure
+\end{algorithmic}
+\end{algorithm}
+If the last level of $cache$ contains elements of length 0, $argmax$ looks for the biggest $best\_score$; if it contains elements of length 1, (i.e. the player can take the last card) it looks for the highest $best\_score\ plus\ value\_of\_the\_remaining\_card$.
+
+
+
+\section{Complexity and correctness of the dynamic approach}
+%\maketitle
+\subsection{Definitions and manipulated objects}
+\begin{itemize}
+\item The initial sequence $S$ of $N$ cards is called the \textbf{problem}. For the sake of clarity, we will write $S = \{x_0, x_1, ... , x_{N-1}\}$ to represent cards inside $S$ (even though we only care about cards' indices, not the values). A \textbf{sub-problem} $P = \{x_{i}, x_{i+1}, ... , x_{i+r-1}\}$ of length $r$ is a sub-string ($i.e.$ a contiguous sub-sequence) of $S$ that can be obtained after some number of moves by both the player and the opponent. Note that since we cannot choose opponent's moves, not every sub-string of $S$ is a sub-problem. For example, $\{3,\ 11,\ 4\}$ is a sub-problem of $S_{0}=\{8,\ 5,\ 3,\ 11,\ 4\}$, but $\{5,\ 3,\ 11\}$ is not: if the player takes $11$, the opponent will take $5$ and if the player takes $4$, the opponent will take $8$.\\
+\item The \textbf{index} $ind(P)$ of $P$ in $S$ is the position of the first card of $P$ in $S$. For example, the index of $\{3,\ 11,\ 4\}$ in $S_0$ is $2$.
+
+\item For two sub-problems $P_1$ and $P_2$ we say that $P_1\leq P_2$ when $ind(P_1)\leq ind(P_2)$. For example $\{8,\ 5,\ 3\} \leq S_{0} \leq \{3,\ 11,\ 4\}$.
+\item A \textbf{level} is a sequence $(P_1, ..., P_l)$ of all (different) sub-problems of the same length. If level $0$ is $\{S\}$ then level $\Lambda$ contains the sub-problems of length $k = N - 2\times \Lambda$. We say that a level is \textbf{ordered} when all its elements are in the same order they appear in $S$ ($i.e.$ $\forall (i, j), \ 1 \leq i < j \leq l,\quad P_i < P_j $). We will show later that our procedure produces ordered levels. An example of (ordered) levels:\\
+0 : $(\{8,\ 5,\ 3,\ 11,\ 4\})$\\
+1 : $(\{8,\ 5,\ 3\},\  \{3,\ 11,\ 4\})$\\
+2 : $(\{5\},\ \{3\},\ \{4\})$
+\item Finally, even though the structure we are going to manipulate is not a tree, we will say that a sub-problem $P'$ is the \textbf{left son} of a sub-problem $P$ if $P'$ is obtained by taking out the rightmost card in $P$ and letting the opponent take their move; similarly, the \textbf{right son} is obtained by removing the the leftmost card. The two sons of $P$ are called \textbf{siblings}.
+\end{itemize}
+
+We want to show that our procedure finds the optimal sequence of moves and does so in a quadratic time.
+\subsection{An upper bound for the number of sub-problems per level}
+The problem that we are going to address is \textit{what is the maximal number of sub-problems that can we have on one level} or, in other words, \textit{how do we know that there's enough merging?}\\
+\rule{12cm}{0.4pt}\\
+Let $S$ be a string of length $N > 0$. How many different sub-strings of length $r$ $(1 \leq r \leq N)$ can we extract from $S$?\\
+\rule{12cm}{0.4pt}\\
+
+Since a sub-string has to be contiguous, and its length $r$ is fixed, the only choice we have is for its index. Which indices are possible? We cannot have it too far near the end of S, otherwise it won't fit: last possible index we can choose for a sub-string is $N - r$. Since all indices between $0$ and $N - r$ are valid choices, the answer to the question above is: $N - r + 1$ sub-strings.
+\QEDA
+\\
+
+
+For our game this means that there can be at most $N - N + 1 = 1$ sub-problem of length $N$ (on level $0$), $N - (N - 2) + 1 = 3$ sub-problems on level $1$, 5 sub-problems on level $2$, 7 sub-problems on level $3$, etc. Note that this upper bound is not optimal: for example, we know that levels for the sub-problems of size $N-2$ and $N-4$ cannot contain more than $2^1 = 2$ and $2^2 = 4$ elements respectively. However, it ensures that the number of sub-problems of length $N-r$ is only a linear function of $N$ (and not an exponential one, as we had with the solution by exhaustive enumeration).
+
+\subsection{Overlap detection}
+
+Our procedure fills each level from left to right, merging overlapping sub-problems. We want to show that it is possible to detect in $O(1)$ if a sub-problem has already been calculated. Indeed, when adding a new sub-problem $P_i$ to a partially filled ordered level $\{P_0, ... , P_{i-1}\}$, we can simply check if $ind(P_{i-1}) = ind(P_i)$ (in which case $P_i$ and $P_{i-1}$ represent the same sub-problem), due to the fact that $\forall j < i-1,\quad P_j<P_{i-1}$, as the level is ordered. Hence we only need to show that:\\
+\rule{12cm}{0.4pt}\\
+The algorithm produces only ordered levels.\\
+\rule{12cm}{0.4pt}\\
+We proceed by induction on $k$  : index of the level.\\
+Level $k=0$ has only one element, so the statement holds. Now suppose that we have (entirely) generated some level $k$. In order to generate level $k+1$, we take every element on level $k$ from left to right, calculate its left and right sons and add them on level $k+1$, occasionally performing merging. Consider the loop invariant "after adding $n^{th}$ element to the level $k+1$, the sequence of its $n$ first elements is ordered". First element to be added to level $k+1$ is added unconditionally. Now suppose that $n-1$ elements have been added to the level $k+1$ without violating the invariant. If the $n^{th}$ element $P_n$ is a sibling of the $P_{n-1}$, then the loop invariant holds:
+
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{siblings.png}
+%\caption{The Universe}
+%\label{fig:univerise}
+\end{figure}
+In the drawing above, we do not specify whichever card do $P_n$ and $P_{n-1}$ lack: in any case $P_{n-1} < P_n$.
+Now let's explore the situation where $P_n$ is not being added after its sibling. All possible cases are listed below:
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{0x0.png}
+%\caption{The Universe}
+%\label{fig:univerise}
+\end{figure}
+In this case, the opponent took the leftmost card in both $P_n$ and $P_{n-1}$. Since the two problems are the same, they are merged into one.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{1x1.png}
+%\caption{The Universe}
+%\label{fig:univerise}
+\end{figure}
+Same, but with the opponent taking the rightmost card.
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{1x0}
+%\caption{The Universe}
+%\label{fig:univerise}
+\end{figure}
+The opponent chooses the the rightmost card in $P_{n-1}$ and the leftmost in $P_{n}$. The problems are different, so $P_{n}$ gets added to the level $k+1$ without being merged with $P_{n-1}$.\\\\
+The following case would seemingly pose a problem:
+\begin{figure}[H]
+\centering
+\includegraphics[scale=0.4]{0x1.png}
+%\caption{The Universe}
+%\label{fig:univerise}
+\end{figure}
+However this situation is impossible. Indeed in $P_{n-1}$ the opponent chooses $x_{i+1}$ over $x_{i+r-1}$, but in $P_n$ he does the opposite. Since the opponent's behaviour is deterministic, we cannot have this case.
+\\
+By induction principle, this proves that level $k+1$ is ordered, which in its turn, concludes the proof.
+\QEDA
+
+\subsection{Conclusion}
+We showed, that in order to apply the dynamic programming approach, one has to explore $\frac{N}{2} = O(N)$ levels; every level having at most $O(N)$ elements means that the amount of operations necessary in order to generate the next level is also $O(N)$, amount of computations to generate each element being constant. Therefore, the total complexity is $O(N^2)$.\\
+\\
+This also proves, that the algorithm terminates.
+\\
+\\In order to show that the algorithm finds the optimal solution, we need to show that the procedure produces a solution that is both feasible and optimal. Again we proceed by induction on levels showing $P(k):=$ \textit{"on level k, all subproblems can be reached, and their field best\_score corresponds to the best score we can get doing so"}
+\\
+The initial problem is feasible and its score is optimal. Suppose some level $k$ satisfies $P(k)$. In $add_sons$ we neither add nor modify elements of the level $k+1$, unless they derive from a problem on the level above, hence the feasibility. In addition, the level consist of all different problems, uniquely represented. A problem is overwritten when its score is below optimal. Hence $P(k)$. \QEDA
+\subsection{Another point of view}
+In the previous section, we assume that overlaps were in fact same slices from our original array of card using the couple (index, lenght). We figured out tho that overlaps might also occurred and different segments of the array, if we could find some pattern repetition. For instance, let’s take a board such as:
+$S = \{2,\ 3,\ 2,\ 3,\ 2,\ 3,\ 2,\ 3\}$
+
+We can see that overlaps actually occurred on the couple (0, 2) and (6, 2) for instance. In order to deal with this kind of problem, we came up with a second solution which is based on a solution where we cached every different problem. The space complexity become then $\frac{N^2-N}{2}$ for the cache, and $\frac{N}{2}$ for the concrete computation. No algorithm details will be given in pseudo code, however you can find the Python algorithm in appendix.
+\subsection{An improvement to the dynamic approach}
+The space occupied by the cache in the previous procedure is a $O(n^2)$ function. In the following algorithm we improve on that by making it linear.\\
+\begin{algorithm}[H]
+\begin{algorithmic}
+\Procedure{Compute\_best\_path}{subproblem $P$, int $N$}
+    \State $height \leftarrow (N + 1)/2 + 1;$
+    \State $cache \leftarrow make\_array(height, None);$
+    \State $cache[0] \leftarrow P;$
+    \State $global\_best\_score \leftarrow - \infty;$
+    \State $best\_path \leftarrow make\_array(height - 1, 0);$
+    \State $stack \leftarrow Empty\_stack();$
+    \For{$level=1...height-1$} \Comment Initializing the cache
+        \State $cache[level] = generate\_left\_son(P,\ level - 1);$
+        \State $best\_path[level - 1] \leftarrow cache[level].card;$
+        \State $push(stack, (generate\_right\_son(P,\ level - 1), level));$ \Comment Put to stack what needs to be computed in the future
+    \EndFor
+    \State $global\_best\_score \leftarrow - cache[height-1].best\_score;$
+    \While{$stack\ is\ not\ empty$}
+        \State $(S, level) \leftarrow pop(stack);$
+        \If{$level = height - 1$} \Comment leaf
+            \State $update(S,\ \&cache,\ \&best\_path,\ \&best\_score\_global);$
+        \Else
+            \If{$cache[level].index = S.index$}
+                \State $pass$ \Comment Already computed
+            \Else
+                \State \Comment Push two sons to the stack and replace the last problem on the level with this one
+                \State $L \leftarrow left\_rigth\_son(S,\ level - 1);$
+                \State $R \leftarrow generate\_rigth\_son(S,\ level - 1);$
+                \State $push(stack, R, level + 1));$
+                \State $push(stack, L, level + 1));$
+                \State $cache[level] = S;$
+            \EndIf
+            
+        \EndIf
+    \EndWhile
+    \State \Return $best\_path;$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+In the pseudocode above, we consider not the whole cache like in the previous algorithm, but only the set of last problems on the level. The $stack$ variable contains information about problems, which need to be explored in the future. Procedure $update$ updates $cache$, $best\_path$ and $best\_score\_global$ with the leaf $S$ as usual, performing merging if necessary.\\
+Adding and removing elements to and from the stack happens in a constant time. The amount of problems evaluated is the same as in the previous version of the algorithm (although they are obtained in  different order). The length of the stack is bound by a linear function in $N$. Therefore, this algorithm has a linear space complexity and a quadratic time complexity.
+
+
+\end{document}
