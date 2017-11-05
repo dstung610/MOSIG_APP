@@ -173,13 +173,22 @@ Where the space complexity is linear: $S(N) = O(N)$ The amount of information st
 
 \section{Dynamic approach}
 
-We use the cache 2 dimensions array of size n by n where n is the total number of cards that we played. We have $C[n]$ is array store the card in order and $cache[n][n]$ is the array of cache
+We use the cache 2 dimensions array of size n by n where n is the total number of cards that we played. We have $C[n]$ is array store the card in order and $cache[n][n]$ is the array of cache.
+
+The data structure for an element in cache[i][j]
+\begin{algorithm}[H]
+\begin{algorithmic}
+\caption{Data structure of cache element}
+\State int score \Comment Store the best score to arrive to that elements
+\State string path \Comment String to store the path to reach that elements with best score
+\end{algorithmic}
+\end{algorithm}
 \begin{algorithm}[H]
 \begin{algorithmic}
 \caption{}
 \Procedure{$cache\_compute$}{$l,r$}
 \For{\texttt{k from 0 to N}} \Comment Diagonal has N elements
-	\State $dog\_take\_card(l,r)$
+	\State $dog\_take\_card(l,r)$ \Comment Choose the higher card between C[l] and C[r]
 	\State $j = 0$
 	\For{\texttt{i from 0 to k}}
 		\If{$k-i == 0$}
@@ -238,7 +247,7 @@ In this dynamic approach we use a cache of 2 dimensions array. The array has the
 \\[0.3cm]
 In addition, we need to store the card order in another array of 1 dimension with size N.
 \\[0.3cm]
-Our space complexity is O($N^{2 + N}$)
+Our space complexity is O($N^{2 }$)
 
 \subsection{Time Complexity}
 
@@ -246,7 +255,7 @@ We need compute the cache which cost $N^{2}/2$
 \\[0.3cm]
 We have to travesing the cache which cost N times.
 \\[0.3cm]
-So that computation has the complexity of O($(N^{2}+2N)/2$).
+So that computation has the complexity of O($N^{2}/2$).
 
 
 \section{Conclusion}
