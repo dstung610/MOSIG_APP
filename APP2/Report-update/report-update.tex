@@ -226,11 +226,11 @@ By travesing the cache diagonal, we can find the solution with the max value.
 \begin{algorithmic}
 \caption{}
 \Procedure{$travesing\_cache\_diagonal$}{}
-\State $max = 0$
+\State $x = 0$	
+\State $y = N$	
+\State $max = cache[x][y]$
 \For{\texttt{i = 0; i < N; i++}}
-	\State $x = 0$	
-	\State $y = N$	
-	\If{$max \leq cache[x][y]$}
+	\If{$max.score \leq cache[x][y],score$}
 		\State $max = cache[x][y]$	
 	\EndIf
 	\State $x = x + 1$
@@ -266,18 +266,3 @@ In this APP, we studied the dynamic approach for a card play problem.
 By using the cache concept. We stored the same problem computation in a 2 dimensions array. so we reduced the amount of computation for the same problem.
 
 \end{document}
-
-    © 2017 GitHub, Inc.
-    Terms
-    Privacy
-    Security
-    Status
-    Help
-
-    Contact GitHub
-    API
-    Training
-    Shop
-    Blog
-    About
-
