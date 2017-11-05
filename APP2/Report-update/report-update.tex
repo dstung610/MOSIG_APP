@@ -178,25 +178,30 @@ We use the cache 2 dimensions array of size n by n where n is the total number o
 \begin{algorithmic}
 \caption{}
 \Procedure{$cache\_compute$}{$l,r$}
-\For{\texttt{k from 0 to nb\_diagonal}}
+\For{\texttt{k from 0 to N}} \Comment Diagonal has N elements
 	\State $dog\_take\_card(l,r)$
 	\State $j = 0$
 	\For{\texttt{i from 0 to k}}
 		\If{$k-i == 0$}
 			\State $cache[0][j].score = C[r++]$
 			\State $cache[0][j].path = `R`$
+			\State r = r -1
 		\ElsIf{$j == 0$}
 			\State $cache[k-i][0].score = C[l++]$ 
 			\State $cache[k-i][0].path = `L`$
+			\State l = l + 1
 		\Else 
 			\If{$cache[k-i-1][j].score \leq  cache[k-i][j-1].score$} 
 				\State $cache[k-i][j].score = cache[k-i][j-1].score + C[r++]$
 				\State $cache[k-i][j].path = append(cache[k-i][j-1].path,`R`)$
+				\State r = r -1		
 			\Else 
 				\State $cache[k-i][j].score = cache[k-i-1][j].score + C[l++]$
 				\State $cache[k-i][j].path = append(cache[k-i-1][j].path,`L`)$	
+				\State l = l + 1
 			\EndIf 
 		\EndIf
+		\State j = j + 1
 	\EndFor
 \EndFor
 \EndProcedure
@@ -217,8 +222,8 @@ By travesing the cache diagonal, we can find the solution with the max value.
 	\If{$max \leq cache[x][y]$}
 		\State $max = cache[x][y]$	
 	\EndIf
-	\State $x++$
-	\State $y--$	
+	\State $x = x + 1$
+	\State $y = y - 1$	
 \EndFor
 
 \Return $max$
@@ -233,15 +238,15 @@ In this dynamic approach we use a cache of 2 dimensions array. The array has the
 \\[0.3cm]
 In addition, we need to store the card order in another array of 1 dimension with size N.
 \\[0.3cm]
-Our space complexity is O($N^{2}$)
+Our space complexity is O($N^{2 + N}$)
 
 \subsection{Time Complexity}
 
-We need compute the cache which cost
+We need compute the cache which cost $N^{2}/2$
 \\[0.3cm]
 We have to travesing the cache which cost N times.
 \\[0.3cm]
-So that computation has the complexity of O($N$).
+So that computation has the complexity of O($(N^{2}+2N)/2$).
 
 
 \section{Conclusion}
