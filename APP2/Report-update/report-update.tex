@@ -230,7 +230,7 @@ By travesing the cache diagonal, we can find the solution with the max value.
 \State $y = N$	
 \State $max = cache[x][y]$
 \For{\texttt{i = 0; i < N; i++}}
-	\If{$max.score \leq cache[x][y],score$}
+	\If{$max.score \leq cache[x][y].score$}
 		\State $max = cache[x][y]$	
 	\EndIf
 	\State $x = x + 1$
