@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.11.13)  5 NOV 2017 22:04
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.11.13)  5 NOV 2017 22:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -892,7 +892,7 @@ E/m/n/10 ç \U/MnSymbolC/m/n/10 ^^P \OML/cmm/m/it/10 value\OMX/MnSymbolE/m/n/10
 0 çç$\OT1/cmr/m/n/10 .
  []
 
-[1] [2] [3] [4] [5] [6] (./report-update.aux) ) 
+[1] [2] [3] [4] [5] [6] [7] (./report-update.aux) ) 
 Here is how much of TeX's memory you used:
  6445 strings out of 493014
  85336 string characters out of 6133350
@@ -901,28 +901,28 @@ Here is how much of TeX's memory you used:
  14615 words of font info for 53 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  38i,6n,26p,802b,288s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2016/texmf-d
-ist/fonts/enc/dvips/mnsymbol/MnSymbolE.enc}{/usr/local/texlive/2016/texmf-dist/
-fonts/enc/dvips/cm-super/cm-super-ts1.enc}{/usr/local/texlive/2016/texmf-dist/f
-onts/enc/dvips/mnsymbol/MnSymbolC.enc}{/usr/local/texlive/2016/texmf-dist/fonts
-/enc/dvips/mnsymbol/MnSymbolD.enc}{/usr/local/texlive/2016/texmf-dist/fonts/enc
-/dvips/mnsymbol/MnSymbolA.enc}</usr/local/texlive/2016/texmf-dist/fonts/type1/p
-ublic/mnsymbol/MnSymbol10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/p
-ublic/mnsymbol/MnSymbol7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/pu
-blic/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/pub
-lic/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publi
-c/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/
-amsfonts/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmr12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfont
-s/cm/cmtt10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super
-/sfrm1000.pfb>
-Output written on report-update.pdf (8 pages, 155020 bytes).
+{/usr/local/texlive/2016/tex
+mf-dist/fonts/enc/dvips/mnsymbol/MnSymbolE.enc}{/usr/local/texlive/2016/texmf-d
+ist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}{/usr/local/texlive/2016/texmf-di
+st/fonts/enc/dvips/mnsymbol/MnSymbolC.enc}{/usr/local/texlive/2016/texmf-dist/f
+onts/enc/dvips/mnsymbol/MnSymbolD.enc}{/usr/local/texlive/2016/texmf-dist/fonts
+/enc/dvips/mnsymbol/MnSymbolA.enc}</usr/local/texlive/2016/texmf-dist/fonts/typ
+e1/public/mnsymbol/MnSymbol10.pfb></usr/local/texlive/2016/texmf-dist/fonts/typ
+e1/public/mnsymbol/MnSymbol7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type
+1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1
+/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/p
+ublic/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/pub
+lic/amsfonts/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmr12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmr7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmtt10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-s
+uper/sfrm1000.pfb>
+Output written on report-update.pdf (9 pages, 155854 bytes).
 PDF statistics:
- 92 PDF objects out of 1000 (max. 8388607)
- 69 compressed objects within 1 object stream
+ 95 PDF objects out of 1000 (max. 8388607)
+ 71 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
