@@ -1,0 +1,373 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{natbib}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{algorithm}
+%\usepackage{algorithmic}
+\usepackage{algpseudocode}
+
+\usepackage{amsmath}%
+\usepackage{MnSymbol}%
+\usepackage{wasysym}%
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=30mm,
+ right=30mm,
+ top=20mm,
+ }
+\newcommand{\argmax}{\arg\!\max}
+\newcommand*{\QEDA}{\hfill\ensuremath{\blacksquare}}%
+
+\begin{document}
+\begin{titlepage}
+\begin{center}
+
+\vspace*{5cm}
+{\large Master 1 MoSIG}\\[0.5cm]
+
+{\Huge \textbf{Algorithmic Problem Solving} }\\[0.5cm]
+{\large APP2 Report} \\
+Hold'em for n00bs\\ 
+Team:%\\SACAD
+\vfill
+
+% Author and supervisor
+\noindent
+\begin{minipage}{0.4\textwidth}
+
+   \centering Members:\\Andrey \textbf{SOSNIN}\\Majdeddine \textbf{ALHAFEZ}\\Antoine \textbf{COLOMBIER}\\Eman \textbf{AL-SHAOUR}\\Son Tung \textbf{DO}\\
+
+\end{minipage}%
+
+\vfill
+% Bottom of the page
+{Grenoble, 5 November, 2017}
+\clearpage
+
+%\tableofcontents
+
+\end{center}
+\end{titlepage}
+\section{Greedy approach}
+We model the set of cards as an array of integers of size $N$. We do not consider a more realistic model ($N$ even, at most 52 cards, values between 2 and 14, at most 4 cards of each value) because we focus (except for this section) on exact algorithms which ignore these details.\\
+An implementation of the simulation of a game, where both players employ the same greedy strategy is the following:
+
+\begin{algorithm}[H]
+\caption{Simulate greedy}
+\begin{algorithmic} 
+\State $S \leftarrow create\_random\_array(N);$
+\State $first \leftarrow 0;$
+\State $last \leftarrow N - 1;$
+\State $wait\_for\_the\_opponent();$
+\State $N \leftarrow length(S) - 1;$
+\While{$N>0$}
+    \If{$S[first] > S[last]$}
+        \State $first \leftarrow first + 1;$
+    \Else
+        \State $last \leftarrow last - 1;$
+    \EndIf
+    \State $N \leftarrow N - 1;$
+    \If{$N>0$}
+        \State $wait\_for\_the\_opponent();$
+        \State $N \leftarrow N - 1;$
+    \EndIf
+\EndWhile
+\end{algorithmic}
+\end{algorithm}
+
+In the code above, $wait\_for\_the\_opponent()$ lets the opponent make their move (if it's the first one, the opponent has an option not to do it). This procedure also updates $fisrt$ or $last$. \textbf{This procedure is assumed to be deterministic}: for example, if the first and the last card have the same value, the opponent always chooses the left one.
+
+Using greedy strategy against an opponent playing a greedy strategy is \textbf{not optimal}: in the following game the opponent can be defeated, but not with the greedy strategy (whoever is taking the first card):\\
+\\
+\centerline{$\{3\ 10\ 3\ 9\ 5\ 2\}$}\\
+\\
+If the player takes the first card he can go: $right-right-left$ (or $2-9-10$). Otherwise, if the opponent takes $3$, he can go $left-left-left$ (or $10-9-2$). In both cases this wins the game, while applying greedy strategy doesn't.\\
+\\
+Using a greedy algorithm with another metric was taken into consideration. The suggested metric was maximizing the immediate score resulting by making a choice: $max(value(plyer's\ choice) - value(opponent's\ choice\ given\ player's\ choice))$. However, the simulations showed that it resulted in a lower win ratio: about $0.15$ versus $0.45$ using standard greedy strategy.
+
+\section{Optimal solution by exhaustion}
+We assume that after a dog’s choice we have two possible solutions for the player’s choice. 
+\begin{itemize}
+\item In case the dog goes first, we have:\\
+optimal\_solution opt = Dogs\_turn(0, N-1)
+\item In case the dog chooses to go second, we have:\\
+optimal\_solution opt = best\_score(explore\_solution(0, N-1, left),\\ explore\_solution(0, N-1, right))
+\end{itemize}
+Since both sons of any node have to be evaluated separately, the time complexity is exponential: $T(N) = 2^{(N/2)}$\\
+Whereas the space complexity is quadratic: $S(N) = O(N^2)$: at any point we store $N$ elements of size $N$.
+
+
+\begin{algorithm}[H]
+\begin{algorithmic} 
+    \State optimal\_solution : $\{$
+    \State \quad string $path;$ \Comment stores the indexes of the cards
+    \State \quad int $score;$ \Comment best total score that we can have reaching this sub-problem from the root
+\State $\}$
+\end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+\begin{algorithmic} 
+\caption{Complete space exploration}
+\Procedure{Dogs\_turn}{$i,j$} \Comment i, j : the indexes of the rightmost and leftmost cards
+ \If{$i\leq j$}
+  \State $optimal\_solution\ opt;$
+  \If{$S[i]\geq S[j]$}
+    \State $value \leftarrow S[j];$
+    \State $j--;$
+    \State $index \leftarrow j;$
+   \Else
+    \State $value \leftarrow S[i];$
+    \State $i++;$
+    \State $index \leftarrow i;$
+  \EndIf
+  
+   \State $right\_opt \leftarrow explore\_solution(i, j, right);$
+    \State $left\_opt \leftarrow explore\_solution(i, j, left);$
+  
+  \If{$left\_opt.score \geq right\_opt.score $}
+    \State $opt.path \leftarrow append(left\_opt.path, index);$
+    \State $opt.score  \leftarrow left\_opt.score + value;$
+   \Else
+    \State $opt.path \leftarrow append(right\_opt.path, index);$
+    \State $opt.score \leftarrow right\_opt.score + value;$
+  \EndIf
+  \State \Return $opt ;$
+  
+ \Else
+ \State \Return $NULL;$
+ \EndIf
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+
+\begin{algorithm}[H]
+\begin{algorithmic} 
+\caption{}
+\Procedure{$explore\_solution$}{$i,j, choice$} \Comment i, j : indexes of the rightmost and leftmost cards, choice: which card to choose
+ \If{$i\leq j$}
+  \State $optimal\_solution\ opt;$
+  \If{$choice = right$}
+    \State $value \leftarrow S[j];$
+    \State $j--;$
+    \State $index \leftarrow j;$
+   \Else
+    \State $value \leftarrow S[i];$
+    \State $i++;$
+    \State $index \leftarrow i;$
+  \EndIf
+  
+  $current\_opt \leftarrow Dogs\_turn(i,j);$
+  
+  \State $opt.path \leftarrow append(current\_opt.path, index);$
+  \State $opt.score  \leftarrow value + current\_opt.score $
+  \State \Return $opt;$
+ \Else
+ \State \Return $NULL;$
+ \EndIf
+ 
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\section{Dynamic approach}
+
+%We use the cache 2 dimensions array of size n by n where n is the total number of cards that we played. We have $cache[n][n]$ is the array of cache. If we move by row ($i++$), this means that we choose the leftmost card, and if we move by column ($j++$), this means that we choose the rightmost card.
+
+Previous solution is too expensive in terms of time complexity: a call to the function with $N=52$ requires about $2^{31}$ operations (which amounts to 86 sec in Python implementation). We can however improve it by storing the results for the redundant computations. We introduce an $N\times N$ matrix $cache$. The value of $cache[i][j]$, if initialized, corresponds to the sub-problem produced by removing $i$ cards on the left and $j$ cards on the right. If the coordinates $(i,j)$ correspond to an impossible sub-problem, $cache[i][j]$ is $None$.
+
+The data structure for an element in $cache[i][j]$
+\begin{algorithm}[H]
+\begin{algorithmic}
+\caption{Data structure of cache element}
+\State int score \Comment Store the best score to arrive to that elements
+\State string path \Comment String to store the path to reach that elements with best score
+\end{algorithmic}
+\end{algorithm}
+
+We fill the matrix diagonal after diagonal, initializing $cache[0][0]$ to represent the initial problem. For every couple $(i,j)$ we check if there's a possible corresponding sub-problem and if so, which way to reach it is the best. A sub-problem can be reached only from it's neighbouring cells on the previous diagonal: either from the top or from the left. The calls to $ make\_dogs\_turn(cache, i, k-i)$ simulates the dog's turn by filling the $k^{th}$ diagonal, producing one element for each element at diagonal k-1. Function $make\_move()$ represents player's choice of a card. It returns the net variation in the score.
+\begin{algorithm}[H]
+\begin{algorithmic}
+\caption{}
+\Procedure{$compute\_cache$}{$size$}
+\State $cache \leftarrow make\_matrix(size, size, None);$
+\State $cache[0][0] \leftarrow Subproblem(score=0; path=\epsilon);$
+\State $dogs\_turn = true;$
+\For{\texttt{k from 1 to size}}
+    \If{$dogs\_turn$}
+        \For{\texttt{i from 0 to k}}
+            %\State \Comment \textit{From every element at diagonal k-1, produce one element at diagonal k}
+            \State $cache[i][k-i] \leftarrow make\_dogs\_turn(cache, i, k-i)$
+        \EndFor
+    \Else 
+        \For{\texttt{i from 0 to k}}
+            \State $cache[i][k-i] \leftarrow choose\_best(cache, i, k-i)$
+        \EndFor
+    \EndIf
+    \State $dogs\_turn := \neg dogs\_turn$
+\EndFor
+\EndProcedure
+\State \\
+\Procedure{$choose\_best$}{$cache, i, j$}
+\State $left\_result \leftarrow None$
+\State $right\_result \leftarrow None$
+\If {$i > 0 \wedge cache[i-1][j] \neq None$}
+    \State $score\_change \leftarrow make\_move(i-1, j, left)$
+    \State $left\_score \leftarrow cache[i-1][j].score + score\_change$
+    \State $left\_path \leftarrow cache[i-1][j].path$
+    \State $left\_result \leftarrow Subproblem(score=left\_score, path=left\_path + "L")$
+\EndIf
+\If {$j > 0 \wedge cache[i][j-1] \neq None$}
+    \State \textit{similar, reading from cache[i][j-1], with}
+    \State $path=right\_path + "R"$
+\EndIf
+%\If {$left\_score = None$}
+%    \If {$right\_score = None$}
+%        \State \Return $None$
+%    \Else
+%        \State \Return $right\_result$
+%    \EndIf
+%\ElsIf{$right\_score = None$}
+%    \State \Return $left\_result$
+\If{\textit{both results are None}}
+    \State \Return $None$
+\ElsIf{one of the results is None}
+    \State \Return \textit{the other one}
+\Else
+    \State \Return \textit{the result with the highest score}
+\EndIf
+\EndProcedure
+
+
+\end{algorithmic}
+\end{algorithm}
+
+Since we only have $N$ moves, the square matrix (2 dimension array) is only used for half of it (the upper left triangle)
+By traversing the cache's main diagonal, we can find the solution with the maximum score value.
+
+
+\begin{algorithm}[H]
+\begin{algorithmic}
+\caption{}
+\Procedure{$travesing\_cache\_diagonal$}{}
+\State $x = 0$	
+\State $y = N$	
+\State $max = cache[x][y]$
+\For{\texttt{i = 0; i < N; i++}}
+	\If{$max.score \leq cache[x][y].score$}
+		\State $max = cache[x][y]$	
+	\EndIf
+\EndFor
+
+\Return $max$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+
+%\section{Space and Time Complexity of Dynamic Approach}
+\subsection{Space complexity}
+We store at most $N^2$ elements in the cache, each containing a sting no longer than $N$ characters. Our space complexity is $O(N^2)$
+%\\[0.3cm]
+%In addition, we need to store the card order in another array of 1 dimension with size N.
+%\\[0.3cm]
+%Our space complexity is O($N^{2 }$)
+
+\subsection{Time Complexity}
+
+We need to compute every the value for every cell of the $N\times N$ matrix at most once.
+\\[0.3cm]
+We have to traverse the diagonal of the cache which costs O($N$)
+\\[0.3cm]
+So overall the computation has a complexity of O($N^{2}$).
+
+\subsection{Proof of optimality}
+
+We want to show that the dynamic procedure returns the same result as the one we would get from full-space exploration tree.
+
+We start by noticing that for every element with depth $k$ in the tree, there is an initialized cell on the $k^{th}$ diagonal in the cache.
+
+For the outer loop (which iterates over the sequence of diagonals) we consider the following loop invariant: "At the previous diagonal, every initialized element contains the path with the best score for the corresponding sub-problem". Given a filled diagonal of rank $k$, any element at the diagonal $k+1$ can be reached from at most 2 directions, both of which are checked, so the invariant holds.
+
+In particular, the last diagonal contains a set of best paths for the empty sub-problem, i.e. the best paths to reach the leaves of the tree. Extracting the maximum of this set gives the optimal solution.
+
+
+\subsection{Improved algorithm}
+Since we access data stored on every diagonal of the cache only once (as the path to reach a cell is stored in the cell), we can improve the space complexity of our solution by using a cache of linear size. We use two arrays of size $n$: one to store the "diagonal" currently being computed and one to store the previous diagonal. Then the we alternate the roles of the arrays.
+\\
+Moreover, in order to reduce the space-complexity further, we can store boolean decisions representing a path on an integer value rather than a string.
+This allows to bring space complexity down to $O(N\ log(N))$, as there's only a finite number of linear-sized arrays and since storing $N$ bits of information takes $log(N)$.
+
+\\
+(The following pseudocode contains minimal differences with the previous version)
+
+
+\begin{algorithm}[H]
+\begin{algorithmic}
+\caption{}
+\Procedure{$compute\_cache$}{$size$}
+\State $cache \leftarrow make\_array(2, []);$
+\State $cache[0] \leftarrow make\_array(size, None);$
+\State $cache[1] \leftarrow make\_array(size, None);$
+\State $cache[0][0] \leftarrow Subproblem(score=0; path=\epsilon);$
+\State $dogs\_turn = true;$
+\For{\texttt{k from 1 to size}}
+    \If{$dogs\_turn$}
+        \For{\texttt{i from 0 to k}}
+            %\State \Comment \textit{From every element at diagonal k-1, produce one element at diagonal k}
+            \State $cache[0][k-i] \leftarrow make\_dogs\_turn(cache[1], i, k-i)$
+        \EndFor
+    \Else 
+        \For{\texttt{i from 0 to k}}
+            \State $cache[1][k-i] \leftarrow choose\_best(cache[0], i, k)$
+        \EndFor
+    \EndIf
+    \State $dogs\_turn := \neg dogs\_turn$
+\EndFor
+\EndProcedure
+\State \\
+\Procedure{$choose\_best$}{$diag, i, k$}
+\State $left\_result \leftarrow None$
+\State $right\_result \leftarrow None$
+\If {$i > 0 \wedge diag[i-1] \neq None$}
+    \State $score\_change \leftarrow make\_move(i-1, left)$
+    \State $left\_score \leftarrow  diag[i-1].score + score\_change$
+    \State $left\_path \leftarrow diag[i-1].path.path$
+    \State $left\_result \leftarrow Subproblem(score=left\_score, path=left\_path<<1)$
+\EndIf
+\If {$i < k \wedge diag[i] \neq None$}
+    \State \textit{similar, reading from cache[i], with}
+    \State $path=right\_path<<1 + 1$
+\EndIf
+%\If {$left\_score = None$}
+%    \If {$right\_score = None$}
+%        \State \Return $None$
+%    \Else
+%        \State \Return $right\_result$
+%    \EndIf
+%\ElsIf{$right\_score = None$}
+%    \State \Return $left\_result$
+\If{\textit{both results are None}}
+    \State \Return $None$
+\ElsIf{one of the results is None}
+    \State \Return \textit{the other one}
+\Else
+    \State \Return \textit{the result with the highest score}
+\EndIf
+\EndProcedure
+
+
+\end{algorithmic}
+\end{algorithm}
+
+
+
+\end{document}
