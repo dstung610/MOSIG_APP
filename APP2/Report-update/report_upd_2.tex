@@ -182,7 +182,7 @@ Whereas the space complexity is quadratic: $S(N) = O(N^2)$: at any point we stor
 
 %We use the cache 2 dimensions array of size n by n where n is the total number of cards that we played. We have $cache[n][n]$ is the array of cache. If we move by row ($i++$), this means that we choose the leftmost card, and if we move by column ($j++$), this means that we choose the rightmost card.
 
-Previous solution is too expensive in terms of time complexity: a call to the function with $N=52$ requires about $2^{31}$ operations (which amounts to 86 sec in Python implementation). We can however improve it by storing the results for the redundant computations. We introduce an $N\times N$ matrix $cache$. The value of $cache[i][j]$, if initialized, corresponds to the sub-problem produced by removing $i$ cards on the left and $j$ cards on the right. If the coordinates $(i,j)$ correspond to an impossible sub-problem, $cache[i][j]$ is $None$.
+Previous solution is too expensive in terms of time complexity: a call to the function with $N=52$ requires about $2^{31}$ operations (which amounts to 86 sec in Python implementation). We can however improve it by storing the results to avoid the redundant computations. We introduce an $N\times N$ matrix $cache$. The value of $cache[i][j]$, if initialized, corresponds to the sub-problem produced by removing $i$ cards on the left and $j$ cards on the right. If the coordinates $(i,j)$ correspond to an impossible sub-problem, $cache[i][j]$ is $None$.
 
 The data structure for an element in $cache[i][j]$
 \begin{algorithm}[H]
@@ -193,7 +193,7 @@ The data structure for an element in $cache[i][j]$
 \end{algorithmic}
 \end{algorithm}
 
-We fill the matrix diagonal after diagonal, initializing $cache[0][0]$ to represent the initial problem. For every couple $(i,j)$ we check if there's a possible corresponding sub-problem and if so, which way to reach it is the best. A sub-problem can be reached only from it's neighbouring cells on the previous diagonal: either from the top or from the left. The calls to $ make\_dogs\_turn(cache, i, k-i)$ simulates the dog's turn by filling the $k^{th}$ diagonal, producing one element for each element at diagonal k-1. Function $make\_move()$ represents player's choice of a card. It returns the net variation in the score.
+We fill the matrix diagonal after diagonal, initializing $cache[0][0]$ to represent the initial problem. For every couple $(i,j)$ we check if there's a possible corresponding sub-problem and if so, which way to reach it is the best. A sub-problem can be reached only from it's neighbouring elements on the previous diagonal: either from the top or from the left. The calls to $ make\_dogs\_turn(cache, i, k-i)$ simulates the dog's turn by filling the $k^{th}$ diagonal, producing one element for each element at diagonal k-1. Function $make\_move()$ represents player's choice of a card. It returns the net variation in the score.
 \begin{algorithm}[H]
 \begin{algorithmic}
 \caption{}
@@ -275,7 +275,7 @@ By traversing the cache's main diagonal, we can find the solution with the maxim
 
 %\section{Space and Time Complexity of Dynamic Approach}
 \subsection{Space complexity}
-We store at most $N^2$ elements in the cache, each containing a sting no longer than $N$ characters. Our space complexity is $O(N^2)$
+We store at most $N^2$ elements in the cache, each containing a string no longer than $N$ characters. Our space complexity is $O(N^2)$
 %\\[0.3cm]
 %In addition, we need to store the card order in another array of 1 dimension with size N.
 %\\[0.3cm]
@@ -305,7 +305,6 @@ Since we access data stored on every diagonal of the cache only once (as the pat
 \\
 Moreover, in order to reduce the space-complexity further, we can store boolean decisions representing a path on an integer value rather than a string.
 This allows to bring space complexity down to $O(N\ log(N))$, as there's only a finite number of linear-sized arrays and since storing $N$ bits of information takes $log(N)$.
-
 \\
 (The following pseudocode contains minimal differences with the previous version)
 
