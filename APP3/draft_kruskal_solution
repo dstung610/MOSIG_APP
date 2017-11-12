@@ -1,0 +1,75 @@
+
+
+procedure distance(h1, h2)
+	return sqrt(pow(h1.x, 2) - pow(h2.x, 2) + pow(h1.y, 2) - pow(h2.y, 2))
+
+procedure shift(index_from, tree)
+	for i from len(tree) to index_from + 1 do
+		tree[i] = tree[i - 1]
+		
+procedure shift(index_from, tree)
+	for i from index_from to len(tree) - 2 do
+		tree[i] = tree[i + 1]
+		
+procedure pop_moves_containing(hole, tree)
+	m = create_array
+	i = 0
+	while i < len(tree) do
+		if tree[i].a == hole or tree[i].b == hole then
+			m.append(tree[i])
+			shrink(i, tree)
+		else
+			i++
+	return m
+
+procedure append_and_keep_sorted(move, tree)
+	for i from 0 to len(tree) do
+		if tree[i].distance > move.distance then
+			shift(i, tree)
+			break
+	tree[i] = move		
+
+procedure hole_in_set(hole, mst)
+	for i from 0 to len(mst) - 1 do
+		if mst.a == hole or mst.b == hole then
+			return true
+		
+	return false
+
+// The next procedure is done using Kruskal
+procedure drill_holes(holes)
+	cg = create_array()
+	for k from 0 to len(holes) do
+		for v from k + 1 to len(holes) do
+			append_and_keep_sorted(move(holes[k], holes[v]), cg)
+		
+	mst = create_array()	
+	for k from 0 to len(cg) do
+		if not (hole_in_set(cg[k].a, mst) and hole_in_set(cg[k].b, mst))
+			mst.add(cg[k])
+	
+	return walkthrough_node(pop_moves_containing(get_top_left_hole(holes), mst), mst)
+	
+procedure walkthrough_node(hole, tree)
+	s = create_array()
+	s.append(hole)
+	for edge in pop_moves_containing(get_top_left_hole(holes), tree) do
+		if edge.a != hole then
+			s.merge(walkthrough_node(edge.a, tree))
+		else 
+			s.merge(walkthrough_node(edge.b, tree))
+	
+	return s
+	
+procedure get_top_left_hole(holes)
+	best = none
+	for i from 0 to len(holes) - 1 do
+		if !best or sqrt(pow(holes[i].x, 2) + pow(holes[i].y, 2)) < sqrt(pow(best.x, 2) + pow(best.y, 2)) then
+			best = holes[i]
+		if sqrt(pow(best.x, 2) + pow(best.y, 2)) == 0 then
+			break
+		
+	return best
+		
+		
+	
