@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.11.13)  12 NOV 2017 14:37
+This is pdfTeX, Version 3.14159265-2.6-1.40.17 (TeX Live 2016) (preloaded format=pdflatex 2016.11.13)  12 NOV 2017 14:17
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**report_app3.tex
-(./report_app3.tex
+**report_upd_2.tex
+(./report_upd_2.tex
 LaTeX2e <2016/03/31>
 Babel <3.9r> and hyphenation patterns for 83 language(s) loaded.
 (/usr/local/texlive/2016/texmf-dist/tex/latex/base/article.cls
@@ -404,36 +404,7 @@ Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
 \ALG@tmplength=\skip50
 )
 Document Style - pseudocode environments for use with the `algorithmicx' style
-) (/usr/local/texlive/2016/texmf-dist/tex/latex/listings/listings.sty
-(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
-\KV@toks@=\toks26
-)
-\lst@mode=\count97
-\lst@gtempboxa=\box28
-\lst@token=\toks27
-\lst@length=\count98
-\lst@currlwidth=\dimen103
-\lst@column=\count99
-\lst@pos=\count100
-\lst@lostspace=\dimen104
-\lst@width=\dimen105
-\lst@newlines=\count101
-\lst@lineno=\count102
-\lst@maxwidth=\dimen106
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/lstmisc.sty
-File: lstmisc.sty 2015/06/04 1.6 (Carsten Heinz)
-\c@lstnumber=\count103
-\lst@skipnumbers=\count104
-\lst@framebox=\box29
-)
-(/usr/local/texlive/2016/texmf-dist/tex/latex/listings/listings.cfg
-File: listings.cfg 2015/06/04 1.6 listings configuration
-))
-Package: listings 2015/06/04 1.6 (Carsten Heinz)
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/amsmath/amsmath.sty
+) (/usr/local/texlive/2016/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2016/03/10 v2.15b AMS math features
 \@mathmargin=\skip51
 
@@ -443,51 +414,51 @@ Package: amstext 2000/06/29 v2.01 AMS text
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks28
-\ex@=\dimen107
+\@emptytoks=\toks26
+\ex@=\dimen103
 ))
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
-\pmbraise@=\dimen108
+\pmbraise@=\dimen104
 )
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2016/03/08 v2.02 operator names
 )
-\inf@bad=\count105
+\inf@bad=\count97
 LaTeX Info: Redefining \frac on input line 199.
-\uproot@=\count106
-\leftroot@=\count107
+\uproot@=\count98
+\leftroot@=\count99
 LaTeX Info: Redefining \overline on input line 297.
-\classnum@=\count108
-\DOTSCASE@=\count109
+\classnum@=\count100
+\DOTSCASE@=\count101
 LaTeX Info: Redefining \ldots on input line 394.
 LaTeX Info: Redefining \dots on input line 397.
 LaTeX Info: Redefining \cdots on input line 518.
-\Mathstrutbox@=\box30
-\strutbox@=\box31
-\big@size=\dimen109
+\Mathstrutbox@=\box28
+\strutbox@=\box29
+\big@size=\dimen105
 LaTeX Font Info:    Redeclaring font encoding OML on input line 634.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 635.
-\macc@depth=\count110
-\c@MaxMatrixCols=\count111
+\macc@depth=\count102
+\c@MaxMatrixCols=\count103
 \dotsspace@=\muskip10
-\c@parentequation=\count112
-\dspbrk@lvl=\count113
-\tag@help=\toks29
-\row@=\count114
-\column@=\count115
-\maxfields@=\count116
-\andhelp@=\toks30
-\eqnshift@=\dimen110
-\alignsep@=\dimen111
-\tagshift@=\dimen112
-\tagwidth@=\dimen113
-\totwidth@=\dimen114
-\lineht@=\dimen115
-\@envbody=\toks31
+\c@parentequation=\count104
+\dspbrk@lvl=\count105
+\tag@help=\toks27
+\row@=\count106
+\column@=\count107
+\maxfields@=\count108
+\andhelp@=\toks28
+\eqnshift@=\dimen106
+\alignsep@=\dimen107
+\tagshift@=\dimen108
+\tagwidth@=\dimen109
+\totwidth@=\dimen110
+\lineht@=\dimen111
+\@envbody=\toks29
 \multlinegap=\skip52
 \multlinetaggap=\skip53
-\mathdisplay@stack=\toks32
+\mathdisplay@stack=\toks30
 LaTeX Info: Redefining \[ on input line 2739.
 LaTeX Info: Redefining \] on input line 2740.
 )
@@ -735,6 +706,10 @@ LaTeX Font Info:    Redeclaring math symbol \invneg on input line 239.
 (/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2014/10/28 v1.0g Enhanced LaTeX Graphics (DPC,SPQR)
 
+(/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks31
+)
 (/usr/local/texlive/2016/texmf-dist/tex/latex/graphics/graphics.sty
 Package: graphics 2016/05/09 v1.0r Standard LaTeX Graphics (DPC,SPQR)
 
@@ -755,25 +730,25 @@ Package: infwarerr 2016/05/16 v1.4 Providing info/warning/error messages (HO)
 (/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 Package: ltxcmds 2016/05/16 v1.23 LaTeX kernel commands for general use (HO)
 )
-\Gread@gobject=\count117
+\Gread@gobject=\count109
 ))
-\Gin@req@height=\dimen116
-\Gin@req@width=\dimen117
+\Gin@req@height=\dimen112
+\Gin@req@width=\dimen113
 )
 (/usr/local/texlive/2016/texmf-dist/tex/latex/csquotes/csquotes.sty
 Package: csquotes 2016/01/31 v5.1g context-sensitive quotations (JAW)
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2015/08/02 v2.2a e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count118
+\etb@tempcnta=\count110
 )
-\csq@reset=\count119
-\csq@gtype=\count120
-\csq@glevel=\count121
-\csq@qlevel=\count122
-\csq@maxlvl=\count123
-\csq@tshold=\count124
-\csq@ltx@everypar=\toks33
+\csq@reset=\count111
+\csq@gtype=\count112
+\csq@glevel=\count113
+\csq@qlevel=\count114
+\csq@maxlvl=\count115
+\csq@tshold=\count116
+\csq@ltx@everypar=\toks32
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/csquotes/csquotes.def
 File: csquotes.def 2016/01/31 v5.1g csquotes generic definitions (JAW)
@@ -797,18 +772,18 @@ Package ifvtex Info: VTeX not detected.
 (/usr/local/texlive/2016/texmf-dist/tex/generic/ifxetex/ifxetex.sty
 Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 )
-\Gm@cnth=\count125
-\Gm@cntv=\count126
-\c@Gm@tempcnt=\count127
-\Gm@bindingoffset=\dimen118
-\Gm@wd@mp=\dimen119
-\Gm@odd@mp=\dimen120
-\Gm@even@mp=\dimen121
-\Gm@layoutwidth=\dimen122
-\Gm@layoutheight=\dimen123
-\Gm@layouthoffset=\dimen124
-\Gm@layoutvoffset=\dimen125
-\Gm@dimlist=\toks34
+\Gm@cnth=\count117
+\Gm@cntv=\count118
+\c@Gm@tempcnt=\count119
+\Gm@bindingoffset=\dimen114
+\Gm@wd@mp=\dimen115
+\Gm@odd@mp=\dimen116
+\Gm@even@mp=\dimen117
+\Gm@layoutwidth=\dimen118
+\Gm@layoutheight=\dimen119
+\Gm@layouthoffset=\dimen120
+\Gm@layoutvoffset=\dimen121
+\Gm@dimlist=\toks33
 )
 
 Package geometry Warning: Over-specification in `h'-direction.
@@ -816,8 +791,8 @@ Package geometry Warning: Over-specification in `h'-direction.
 
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... none found.
-(./report_app3.aux)
-\openout1 = `report_app3.aux'.
+(./report_upd_2.aux)
+\openout1 = `report_upd_2.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 28.
 LaTeX Font Info:    ... okay on input line 28.
@@ -838,21 +813,20 @@ LaTeX Font Info:    Try loading font information for TS1+cmr on input line 28.
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    ... okay on input line 28.
-\c@lstlisting=\count128
 
 (/usr/local/texlive/2016/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count129
-\scratchdimen=\dimen126
-\scratchbox=\box32
-\nofMPsegments=\count130
-\nofMParguments=\count131
-\everyMPshowfont=\toks35
-\MPscratchCnt=\count132
-\MPscratchDim=\dimen127
-\MPnumerator=\count133
-\makeMPintoPDFobject=\count134
-\everyMPtoPDFconversion=\toks36
+\scratchcounter=\count120
+\scratchdimen=\dimen122
+\scratchbox=\box30
+\nofMPsegments=\count121
+\nofMParguments=\count122
+\everyMPshowfont=\toks34
+\MPscratchCnt=\count123
+\MPscratchDim=\dimen123
+\MPnumerator=\count124
+\makeMPintoPDFobject=\count125
+\everyMPtoPDFconversion=\toks35
 ) (/usr/local/texlive/2016/texmf-dist/tex/generic/oberdiek/pdftexcmds.sty
 Package: pdftexcmds 2016/05/10 v0.21 Utility functions of pdfTeX for LuaTeX (HO
 )
@@ -931,86 +905,70 @@ e
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-LaTeX Font Info:    Try loading font information for U+msa on input line 50.
+LaTeX Font Info:    Try loading font information for U+msa on input line 47.
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 50.
+LaTeX Font Info:    Try loading font information for U+msb on input line 47.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for U+wasy on input line 50.
+LaTeX Font Info:    Try loading font information for U+wasy on input line 47.
 
 (/usr/local/texlive/2016/texmf-dist/tex/latex/wasysym/uwasy.fd
 File: uwasy.fd 2003/10/30 v2.0 Wasy-2 symbol font definitions
 ) [1
 
 {/usr/local/texlive/2016/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-<F0.jpg, id=10, 615.29875pt x 560.0925pt>
-File: F0.jpg Graphic file (type jpg)
- <use F0.jpg>
-Package pdftex.def Info: F0.jpg used on input line 66.
-(pdftex.def)             Requested size: 128.0387pt x 116.54605pt.
+Underfull \hbox (badness 10000) in paragraph at lines 87--94
 
-<F1.jpg, id=11, 621.32124pt x 543.02875pt>
-File: F1.jpg Graphic file (type jpg)
- <use F1.jpg>
-Package pdftex.def Info: F1.jpg used on input line 71.
-(pdftex.def)             Requested size: 128.0387pt x 111.90163pt.
+ []
 
-<F2.jpg, id=12, 603.25375pt x 524.96124pt>
-File: F2.jpg Graphic file (type jpg)
- <use F2.jpg>
-Package pdftex.def Info: F2.jpg used on input line 76.
-(pdftex.def)             Requested size: 128.0387pt x 111.41461pt.
 
-Underfull \hbox (badness 10000) in paragraph at lines 88--89
+Underfull \hbox (badness 10000) in paragraph at lines 87--94
+
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 87--94
 
  []
 
 [1
 
- <./F0.jpg> <./F1.jpg> <./F2.jpg>]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 92.
-
-(/usr/local/texlive/2016/texmf-dist/tex/latex/base/omscmr.fd
-File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
-)
-LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 92.
- [2] [3]
-(./report_app3.aux) ) 
+] [2] [3] [4] [5] [6] (./report_upd_2.aux) ) 
 Here is how much of TeX's memory you used:
- 8587 strings out of 493014
- 114196 string characters out of 6133350
- 182699 words of memory out of 5000000
- 11959 multiletter control sequences out of 15000+600000
- 23120 words of font info for 83 fonts, out of 8000000 for 9000
+ 6919 strings out of 493014
+ 92327 string characters out of 6133350
+ 164777 words of memory out of 5000000
+ 10334 multiletter control sequences out of 15000+600000
+ 14961 words of font info for 54 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 38i,6n,32p,821b,1210s stack positions out of 5000i,500n,10000p,200000b,80000s
-{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/mnsymb
-ol/MnSymbolA.enc}{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/mnsymbol/M
-nSymbolC.enc}{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/cm-super/cm-su
-per-ts1.enc}{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/mnsymbol/MnSymb
-olE.enc}{/usr/local/texlive/2016/texmf-dist/fonts/enc/dvips/mnsymbol/MnSymbolD.
-enc}</usr/local/texlive/2016/texmf-dist/fonts/type1/public/mnsymbol/MnSymbol10.
-pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/mnsymbol/MnSymbol7.p
-fb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pf
-b></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
-></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
-></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb>
-</usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><
-/usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></u
-sr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr
-/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/lo
-cal/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/loc
-al/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/loca
-l/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on report_app3.pdf (4 pages, 234518 bytes).
+ 38i,7n,28p,822b,294s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/local/texlive/2016/texmf-dist
+/fonts/enc/dvips/mnsymbol/MnSymbolE.enc}{/usr/local/texlive/2016/texmf-dist/fon
+ts/enc/dvips/cm-super/cm-super-ts1.enc}{/usr/local/texlive/2016/texmf-dist/font
+s/enc/dvips/mnsymbol/MnSymbolC.enc}{/usr/local/texlive/2016/texmf-dist/fonts/en
+c/dvips/mnsymbol/MnSymbolD.enc}{/usr/local/texlive/2016/texmf-dist/fonts/enc/dv
+ips/mnsymbol/MnSymbolA.enc}</usr/local/texlive/2016/texmf-dist/fonts/type1/publ
+ic/mnsymbol/MnSymbol10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publ
+ic/mnsymbol/MnSymbol7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmmi10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/a
+msfonts/cm/cmmi7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/ams
+fonts/cm/cmr10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmr12.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr7.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/c
+m/cmti10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmtt10.pfb></usr/local/texlive/2016/texmf-dist/fonts/type1/public/cm-super/sfr
+m1000.pfb>
+Output written on report_upd_2.pdf (7 pages, 175314 bytes).
 PDF statistics:
- 83 PDF objects out of 1000 (max. 8388607)
- 60 compressed objects within 1 object stream
+ 93 PDF objects out of 1000 (max. 8388607)
+ 70 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

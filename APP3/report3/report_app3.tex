@@ -7,6 +7,7 @@
 \usepackage{float}
 \usepackage{algorithm}
 \usepackage{algpseudocode}
+\usepackage{listings}
 
 \usepackage{amsmath}%
 \usepackage{MnSymbol}%
@@ -62,34 +63,43 @@ Team:\\SACAD
 Let us assume that we have $N$ points to drill and they are arranged as shown in figure1 where the distance between two horizontal points equals $2N$ and the distance between two vertical points equals to $1$.
 
 \begin{figure}[h]
-\includegraphics[width=0.3\linewidth]{F0.jpg}
+\centering \includegraphics[width=0.3\linewidth]{F0.jpg}
 \caption{circuit board}
 \end{figure}
 
 \begin{figure}[h]
-\includegraphics[width=0.3\linewidth]{F1.jpg}
+\centering \includegraphics[width=0.3\linewidth]{F1.jpg}
 \caption{behavior of the current algorithm}
 \end{figure}
 
 \begin{figure}[h]
-\includegraphics[width=0.3\linewidth]{F2.jpg}
+\centering \includegraphics[width=0.3\linewidth]{F2.jpg}
 \caption{behavior of the greedy algorithm}
 \end{figure}
 
 Figure 2 shows the behavior of the current algorithm (this is the best behavior where after drilling all the points in a row, we drill the point just bellow the last drilled point). The total cost of the algorithm is 
-$C = $O($N^{2}$)
+$C = O(N^{2})$
 
-Figure 3 shows the behavior of what seems to be a better solution where we have $C* = $O($N$)
-The ratio is $C = $O($N$) and therefore such $\alpha$ doesn't exist and the current algorithm is not an $\alpha$-approximation.
+Figure 3 shows the behavior of what seems to be a better solution where we have $C^{*} = O(N)$
+The ratio is $C = O(N)$ and therefore such $\alpha$ doesn't exist and the current algorithm is not an $\alpha$-approximation.
 
 \section{Greedy Approach}
 \subsection{Propose an algorithm}
-This greedy approach consists of going through the set of points picking up the point with the minimum distance to the current point.
+This greedy approach consists of going through the set of points picking up the point with the minimum distance to the current point.\\
+
+In order to compute the algorithm using the notation of point, we have a data structure for point
+\begin{lstlisting}
+point {
+	int x; /* x-coordinate */
+	int y; /* y-coordinate */
+}
+\end{lstlisting}
+
 
 \begin{algorithm}[H]
-\caption{Greedy}
+\caption{Greedy Approach}
 \textbf{Input: }$A[N]$ array of N points to drill\\
-\textbf{Output: }the order in which we drill the points
+\textbf{Output: } Array $A[N]$ with the order in which we drill the points
 \begin{algorithmic} 
 \For{\texttt{k from 0 to N}}
     \State $index \leftarrow -1$
@@ -103,25 +113,40 @@ This greedy approach consists of going through the set of points picking up the 
     \EndFor
     \State $swap\_elements(k+1, index)$
 \EndFor
-
 \end{algorithmic}
 \end{algorithm}
-The function $find\_distance(p1, p2)$ calculate the Euclidean distance between two points which is given by:
-$distance = \sqrt{(x1-x2){^2} + (y1+y2)}{^2} $
+The function $find\_distance(p_{1}, p_{2})$ calculate the Euclidean distance between two points which is given by:
+$distance = \sqrt{(x_{1}-x_{2}){^2} + (y_{1}+y_{2})}{^2} $
 
 \subsection{Showing it is not optimal}
 \subsection{Proof it is a 2-approximation}
 \subsection{Proof it is not a 2-approximation}
 
-\section{Minimum Spanning Tree}
+\section{Minimum Spanning Tree - MST}
 
 \subsection{Propose an algorithm}
+In MST, we have nodes (the notation of point in our circuit board) and edges (represent the distance between 2 points in our circuit board).The idea of proposed algorithm based on the MST is to start with 1 node, we travel to the neighbors nodes. When we come to one neighbor node, we need explore its neighbors, except for the node we come from, until there is no neighbor in that node. At the node which have no neighbor but the previous node, we come back.
 
+\begin{algorithm}[H]
+\caption{Algorithm based on MST}
+\textbf{Input: }MST for the point\\
+\textbf{Output: }The $result\_array$ stores points in order that we need to move the drill
+\begin{algorithmic} 
+\Procedure{explore}{node, previous\_node} \Comment first call, we can have the previous\_node is null
+\State $result\_array \leftarrow node$  \Comment add the current node to the result\_array
+\While{\texttt{exist a neighbor except the previous node}}
+    \State $explore(one neighbor, node)$
+\EndWhile
+\State $result\_array \leftarrow node$ \Comment add the current node to the result\_array again due to revisit
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
 \subsection{2-approximation proof}
-We know that every spanning tree is more expensive than the weight of the MST, thus making a lower bound regarding the optimal solution :\\
-$MST \leq C{^*}$ \\
-Our algorithm consider the MST of the the holes, in the worst case, we go through every edge in MST twice\\
-$C = 2 * MST$ \\ 
+We know that every spanning tree is more expensive than the weight of the MST, thus making a lower bound regarding the optimal solution :
+$MST \leq C^{*}$  (1)\\
+Our algorithm consider the MST of the holes, in the worst case, we go through every edge in MST twice.
+$C = 2 \times MST$  (2)\\ 
+From (1) and (2) we have $C \leq 2 \times C^{*}$.\\
 We conclude that the algorithm is a 2-approximation.
 
 \section{Kruskal's/Prim's Algorithm}
