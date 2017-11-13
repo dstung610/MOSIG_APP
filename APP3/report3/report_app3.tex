@@ -146,7 +146,43 @@ In MST, we have nodes (the notation of point in our circuit board) and edges (re
 \end{algorithmic}
 \end{algorithm}
 
-The whole pseudo-code is included in file algo\_MST\_based.
+\subsection{Implementation}
+
+As output, Kruskal implementation is returning a Node containing all the neighbors sorted using the distance to itself. We have the implementation.
+
+\begin{lstlisting}
+/* Data structure */
+struct Node {
+	int i;
+	list<Node> neighbors
+};
+
+visited = create_array()
+solution = create_array()
+
+/* Entry point */
+procedure drill_holes(holes)
+	root_mst = kruskal_implementation(holes)
+	
+	for k from 0 to len(holes) - 1 do
+		visited[k] = 0
+
+	walkthrough_node(GetFirstNode(mst))
+
+/* Recursive worker */
+procedure walkthrough_node(node)
+	index = node.i
+	visited[index] = true
+	
+	solution += node
+		n = len(node.neighbors)
+	
+	for i from 0 to n - 1 do
+		if not visited[node.neighbors[i]]
+			walkthrough_node(node.neighbors[i])
+\end{lstlisting}
+
+Let n denote the number of nodes. For a complete graph, $|E| = O(n^2)$, So Kruskal has the complexity of $O(n^2log(n))$. On the other hand, during the exploration, we check every node exactly once, so the complexity of this procedure is linear. Overall the algorithm is dominated by the Kruskal's cost. 
 
 \subsection{2-approximation proof}
 We know that every spanning tree is more expensive than the weight of the MST, thus making a lower bound regarding the optimal solution :
