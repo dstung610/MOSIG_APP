@@ -1,0 +1,7 @@
+\begin{document}
+
+\section{Correctness of Kruskal's algorithm}
+We note by $w$ the weight function.
+We want to show that Kruskal's algorithm returns the minimal spanning tree. First, the result is clearly a spanning tree since it doesn't have any cycles, and it is connected (as otherwise we would have encounter an edge that connects two disconnected parts without creating a cycle since the initial graph is connected). Now we are going to prove that it is minimal. Let $K$ be the spanning tree produced by Kruskal's algorithm and $T$ be an arbitrary spanning tree. We are going to show that by gradually transforming $K$ into $T$ by adding and removing edges, we can only increase its weight (therefore we will have $w(T)\geq w(K)$). First, note that $K$ and $T$ have the same number of edges ($|V|-1$) as they are both connected and acyclic. Suppose $T\neq K$. Let $e_1$ be the edge with the minimum weight in $T\backslash K$. Let $C = \{e_1e_2,...,e_k\}$ be the elementary cycle created by adding $e_1$ to $K$. Let $e_j \in C \backslash T$ ($e_j$ exists since the $C$ is not contained in $T$, which is a tree). We have $w(e_j)\leq w(e_1)$, since otherwise $e_1$ would have been chosen by Kruskal before $e_j$. Consider $K' = K\backslash \{e_1\}\cup\{e_j\}$. $K'$ is a spanning tree, but its weight is greater or equal to the weight of $K$ and $|K'\cap T| > |K \cap T|$. Repeating the described procedure a finite number of times on $K'$ in the place of $K$ etc will yield $T$. Thus $w(T)\geq w(K)$.
+
+\end{document}
