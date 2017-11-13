@@ -1,4 +1,6 @@
-
+visited = create_array()
+spanning_tree = create_array()
+solution = create_array()
 
 procedure distance(h1, h2)
 	return sqrt(pow(h1.x, 2) - pow(h2.x, 2) + pow(h1.y, 2) - pow(h2.y, 2))
@@ -11,7 +13,7 @@ procedure shift(index_from, tree)
 	for i from index_from to len(tree) - 2 do
 		tree[i] = tree[i + 1]
 		
-procedure pop_moves_containing(hole, tree)
+procedure get_edges_containing(hole, tree)
 	m = create_array
 	i = 0
 	while i < len(tree) do
@@ -22,12 +24,12 @@ procedure pop_moves_containing(hole, tree)
 			i++
 	return m
 
-procedure append_and_keep_sorted(move, tree)
+procedure append_and_keep_sorted(edge, tree)
 	for i from 0 to len(tree) do
-		if tree[i].distance > move.distance then
+		if tree[i].distance > edge.distance then
 			shift(i, tree)
 			break
-	tree[i] = move		
+	tree[i] = edge		
 
 procedure hole_in_set(hole, mst)
 	for i from 0 to len(mst) - 1 do
@@ -41,25 +43,48 @@ procedure drill_holes(holes)
 	cg = create_array()
 	for k from 0 to len(holes) do
 		for v from k + 1 to len(holes) do
-			append_and_keep_sorted(move(holes[k], holes[v]), cg)
+			append_and_keep_sorted(edge(holes[k], holes[v]), cg)
 		
 	mst = create_array()	
 	for k from 0 to len(cg) do
 		if not (hole_in_set(cg[k].a, mst) and hole_in_set(cg[k].b, mst))
 			mst.add(cg[k])
 	
-	return walkthrough_node(pop_moves_containing(get_top_left_hole(holes), mst), mst)
+	return walkthrough_node(pop_edges_containing(get_top_left_hole(holes), mst), mst)
+	
+procedure drill_holes(holes)
+
+	root_mst = internal_safe_and_clean_kruskal(holes)
+	
+	for k from 0 to len(holes) - 1 do
+		visited[k] = 0
+
+	walkthrough_node(GetFirstNode(mst))
+	
+
 	
 procedure walkthrough_node(hole, tree)
 	s = create_array()
 	s.append(hole)
-	for edge in pop_moves_containing(get_top_left_hole(holes), tree) do
+	visited.append(hole)
+	for edge in get_edges_containing(hole, tree) do
 		if edge.a != hole then
-			s.merge(walkthrough_node(edge.a, tree))
+			s += walkthrough_node(edge.a, tree)
 		else 
-			s.merge(walkthrough_node(edge.b, tree))
+			s += walkthrough_node(edge.b, tree)
 	
 	return s
+	
+procedure walkthrough_node(node)
+	index = node.i
+	visited[index] = true
+	
+	solution += node
+	
+	n = len(node.neighbors)
+	for i from 0 to n - 1 do
+		if not visited[node.neighbors[i]]
+			walkthrough_node(node.neighbors[i])
 	
 procedure get_top_left_hole(holes)
 	best = none
