@@ -77,11 +77,11 @@ Let us assume that we have $N$ points to drill and they are arranged as shown in
 \caption{behavior of the greedy algorithm}
 \end{figure}
 
-Figure 2 shows the behavior of the current algorithm (this is the best behavior where after drilling all the points in a row, we drill the point just bellow the last drilled point). The total cost of the algorithm is 
+Figure 2 shows the behavior of the current algorithm (this is the best behavior based on the given description where after drilling all the points in a row, we drill the point just bellow the last drilled point). The total cost of the path is 
 $C = O(N^{2})$
 
-Figure 3 shows the behavior of what seems to be a better solution where we have $C^{*} = O(N)$
-The ratio is $C = O(N)$ and therefore such $\alpha$ doesn't exist and the current algorithm is not an $\alpha$-approximation.
+Figure 3 shows the behavior of what seems to be a better solution where we have $C' = O(N)$
+The ratio is $O(N)$ and therefore such $\alpha$ doesn't exist and the current algorithm is not an $\alpha$-approximation.
 
 \section{Greedy Approach}
 \subsection{Propose an algorithm}
@@ -116,11 +116,15 @@ point {
 \end{algorithmic}
 \end{algorithm}
 The function $find\_distance(p_{1}, p_{2})$ calculate the Euclidean distance between two points which is given by:
-$distance = \sqrt{(x_{1}-x_{2}){^2} + (y_{1}+y_{2})}{^2} $
-
+$distance = \sqrt{(x_{1}-x_{2}){^2} + (y_{1}+y_{2})}{^2} $ \\[0.3cm]
+The complexity of this proposed algorithm is $O(N^{2})$. The essential of this algorithm is similar to a sorting problem which can be implemented with complexity of $O(N \times log(N))$, but we still need compute the distance that costs $O(N^{2})$ 
 \subsection{Showing it is not optimal}
-\subsection{Proof it is a 2-approximation}
-\subsection{Proof it is not a 2-approximation}
+As we can see on figure4 bellow, the greedy solution is not optimal. Due to fact that the best choice in a local context might not be the best one for the final solution as we implement it in our greedy algorithm, we can then, admit that this solution is not solvable by a direct greedy solution.
+
+\begin{figure}[h]
+\centering \includegraphics[width=0.5\linewidth]{not_optimal.png}
+\caption{greedy vs optimal}
+\end{figure}
 
 \section{Minimum Spanning Tree - MST}
 
@@ -141,6 +145,9 @@ In MST, we have nodes (the notation of point in our circuit board) and edges (re
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
+
+The whole pseudo-code is included in file algo\_MST\_based.
+
 \subsection{2-approximation proof}
 We know that every spanning tree is more expensive than the weight of the MST, thus making a lower bound regarding the optimal solution :
 $MST \leq C^{*}$  (1)\\
@@ -149,7 +156,22 @@ $C = 2 \times MST$  (2)\\
 From (1) and (2) we have $C \leq 2 \times C^{*}$.\\
 We conclude that the algorithm is a 2-approximation.
 
-\section{Kruskal's/Prim's Algorithm}
+\section{Correctness of Kruskal's algorithm}
+
+We note by $w$ the weight function.
+
+We want to show that Kruskal's algorithm returns the minimal spanning tree.
+
+First, the result is clearly a spanning tree since it doesn't have any cycles, and it is connected (as otherwise we would have encounter an edge that connects two disconnected parts without creating a cycle since the initial graph is connected). Now we are going to prove that it is minimal. 
+Let $K$ be the spanning tree produced by Kruskal's algorithm and $T$ be an arbitrary spanning tree. 
+We are going to show that by gradually transforming $K$ into $T$ by adding and removing edges, we can only increase its weight (therefore we will have $w(T)\geq w(K)$).
+
+First, note that $K$ and $T$ have the same number of edges ($|V|-1$) as they are both connected and acyclic. Suppose $T\neq K$. Let $e_{min}$ be the edge with the minimum weight in $T\backslash K$. 
+
+Let $C = \{e_1,e_2,...,e_k,e_{min}\}$ be the elementary cycle created by adding $e_{min}$ to $K$. Let $e_j \in C \backslash T$ ($e_j$ exists since the $C$ is not contained in $T$, which is a tree). We have $w(e_j)\leq w(e_{min})$, since otherwise Kruskal would have chose $e_{min}$ over $e_j$. Consider $K' = (K\backslash \{e_j\})\cup\{e_{min}\}$. $K'$ is a spanning tree, but its weight is greater or equal to the weight of $K$ and $|K'\cap T| > |K \cap T|$. 
+
+Repeating the described procedure a finite number of times on $K'$ in the place of $K$ etc will produce $T$. Thus $w(T)\geq w(K)$.
+
+\section{Improving the algorithm}
 
 \end{document}
-
