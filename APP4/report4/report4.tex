@@ -1,0 +1,107 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+
+\usepackage{natbib}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{float}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+\usepackage{listings}
+
+\usepackage{amsmath}%
+\usepackage{MnSymbol}%
+\usepackage{wasysym}%
+\usepackage{graphicx}
+\usepackage{csquotes}
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={170mm,257mm},
+ left=30mm,
+ right=30mm,
+ top=20mm,
+ }
+\newcommand{\argmax}{\arg\!\max}
+\newcommand*{\QEDA}{\hfill\ensuremath{\blacksquare}}%
+
+\begin{document}
+\begin{titlepage}
+\begin{center}
+
+\vspace*{10cm}
+{\large Master 1 MoSIG}\\[0.5cm]
+
+{\Huge \textbf{Algorithmic Problem Solving} }\\[0.5cm]
+{\large APP3 Report}\\
+Hole Drilling\\ 
+Team:\\SACAD
+\vfill
+
+% Author and supervisor
+\noindent
+\begin{minipage}{0.4\textwidth}
+   \centering Members:\\
+   Andrey \textbf{SOSNIN}\\
+   Majdeddine \textbf{ALHAFEZ}\\
+   Antoine \textbf{COLOMBIER}\\
+   Eman \textbf{AL-SHAOUR}\\
+   Son Tung \textbf{DO}\\
+\end{minipage}%
+
+\vfill
+% Bottom of the page
+{Grenoble, 12 November, 2017}
+\end{center}
+\end{titlepage}
+\clearpage
+
+\section{Introduction}
+We want optimal. Naive approach - exponential, we use dynamic instead and yata-yata-yata. $D$ is the dictionary with latin characters, $\mathcal{D}$ is its translation into Morse. We suppose that $\epsilon \notin D$.
+
+\section{Principle}
+
+We denote the Morse sequence by $m=(m_0\dots m_{L-1})$. $m[i,j]$ denotes the subsequence $(m_i\dots m_{j-1})$. The proposed dynamic procedure is based on the following observation:\\
+Let $w$ be a word of the dictionary such that its unique translation into Morse alphabet $w'$ of length $|w'|$ occurs in $m$ at index $i>0$ (i.e. $m[i,i+|w'|]=w'$). Then the number $C_{i,w'}$ of interpretations of $m[0,i+|w'|]$ where the last word is $w$, equals the number $C_i$ of interpretations of $m[0,i]$.\\
+This leads us to establish a recursive formula for $C_i$:
+\begin{equation*}
+    C_i = \sum_{\substack{w'\in\mathcal{D}\\ m[0,i]=\alpha w'}}{C_{i-|w'|, w'}}\ + F_i = \sum_{\substack{w'\in\mathcal{D}\\ m[0,i]=\alpha w'}}{C_{i-|w'|}}  + F_i
+\end{equation*}
+where $C_0 = 0$, "$ m[0,i]=\alpha w'$" means that $w'$ is a strict suffix of $m[0,i]$ and
+\begin{equation*}
+    F_i = |\{w'\in \mathcal{D}\ |\ m[0,i]=w'\}|\quad (note\ that\ F_i = 0\ for\ i>4\times M)
+\end{equation*}
+
+\section{Algorithm}
+
+\begin{algorithm}
+\begin{algorithmic}
+\Procedure{$compute\_number\_sequences$}{$m, L, \mathcal{D}$}
+\State $C \leftarrow create\_array(L, 0);$
+\For{$i=1\dots L-1$}
+    \For{$w' \in \mathcal{D}$}
+        \If{$m[i-|w'|,\ i] = w'$} \Comment the word matches the sequence
+            \If{$|w'| = i$} \Comment is it the first word in m?
+                \State $C[i] = 1$
+            \Else
+                \State $C[i] += C[i-|w'|]$
+            \EndIf
+        \EndIf
+        
+    \EndFor
+\EndFor
+\State \Return{$C[L-1]$}
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+\section{Complexity analysis}
+\subsubsection*{Time complexity}
+At every iteration inside the innermost loop, aside from some constant-cost operations, we perform an equality check between two strings of length bound by $M$: it costs $O(M)$. In total there are $L\times N$ of those iterations: the total procedure's time cost is in $O(L\times N \times M)$. It is polynomial in all variables.
+\subsubsection*{Space complexity}
+We have to produce an array of size $L$. Also, if we consider that the dictionary $\mathcal{D}$ of words translated into Morse is not available at the beginning, storing it would cost an additional $O(N\times M)$ overhead -- however, iterating on words of $D$ (rather than $\mathcal{D}$) and translating them on-the-fly would neither increase the asymptotic space complexity nor the time complexity (as it would take $O(M)$ operations each time and would count additively).
+\section{Improvements}
+The first improvement to the space complexity would consist in storing at any given point only last 80 computed values of $C$, as there can be no words longer than $4\times M = 80$ Morse symbols. For that we should replace $C[x]$ by $C[x\ mod\ 4\times M]$ for all $x$ (as well as $create\_array(L, 0)$ by $create\_array(4\times M, 0)$)
+
+
+\end{document}
